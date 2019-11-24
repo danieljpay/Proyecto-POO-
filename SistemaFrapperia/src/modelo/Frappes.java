@@ -35,6 +35,7 @@ public class Frappes implements Serializable {
 		listaFrappes.get(index).setPrecio(precioFrappe);
 		listaFrappes.get(index).setIngredientes(ingredientes);
 	}
+	
 	// elimina un frappe dado su index
 	public void eliminarFrappe(int index) {
 		listaFrappes.remove(index);

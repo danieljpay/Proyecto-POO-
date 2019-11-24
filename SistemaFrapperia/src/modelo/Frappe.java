@@ -56,6 +56,13 @@ public class Frappe implements Serializable {
 	public Frappe() {
 		
 	}
+	
+	//Metodo para igualar a otro Frappe
+	public void igualarFrappe (Frappe frappeAIgualar) {
+		this.nombre = frappeAIgualar.getNombre();
+		this.precio = frappeAIgualar.getPrecio();
+		this.ingredientes = frappeAIgualar.getIngredientes();
+	}
 
 	// getters
 	public String getNombre() {

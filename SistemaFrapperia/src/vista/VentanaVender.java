@@ -208,6 +208,7 @@ public class VentanaVender extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				controlador.terminarVenta(venta);
+				controlador.limpiarCarrito();
 				dispose();
 			}
 		});

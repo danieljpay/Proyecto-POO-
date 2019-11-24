@@ -14,10 +14,11 @@ import java.awt.GridBagConstraints;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaHistorialVentas extends JFrame {
 
@@ -33,8 +34,6 @@ public class VentanaHistorialVentas extends JFrame {
 	private JTable tablaVentas;
 	private JLabel lblHistorialDeVentas;
 	private JButton btnSalir;
-	private JLabel lblFiltrarPor;
-	private JComboBox<String> comboBox;
 
 	/**
 	 * Create the frame.
@@ -73,28 +72,19 @@ public class VentanaHistorialVentas extends JFrame {
 		contentPane.add(lblHistorialDeVentas);
 		
 		btnSalir = new JButton("Salir");
-		btnSalir.setBounds(493, 360, 143, 30);
-		contentPane.add(btnSalir);
-		
-		lblFiltrarPor = new JLabel("Mostrar:");
-		lblFiltrarPor.setBounds(495, 52, 87, 14);
-		contentPane.add(lblFiltrarPor);
-		
-		comboBox = new JComboBox<String>();
-		comboBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				// AQUÍ SE LLAMA AL CONSTRUCTOR PARA CAMBIAR LA TABLA DE VENTAS.
+		btnSalir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				dispose();
+			}
+		});
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				
 			}
 		});
-		DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<String>();
-		modelo.addElement("Todas");
-		modelo.addElement("Último mes");
-		modelo.addElement("Última semana");
-		modelo.addElement("Hoy");
-		comboBox.setModel(modelo);;
-		comboBox.setBounds(493, 77, 143, 30);
-		contentPane.add(comboBox);
+		btnSalir.setBounds(493, 360, 143, 30);
+		contentPane.add(btnSalir);
 	}
 
 	// getters --------

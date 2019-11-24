@@ -20,6 +20,8 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ListSelectionModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaFrappes extends JFrame {
 
@@ -71,6 +73,10 @@ public class VentanaFrappes extends JFrame {
 			panelTabla.setLayout(gbl_panelTabla);
 			
 			btnEditar = new JButton("Editar");
+			btnEditar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
 			btnEditar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
@@ -115,6 +121,15 @@ public class VentanaFrappes extends JFrame {
 			panelTabla.add(btnAgregar, gbc_btnAgregar);
 			
 			btnEliminar = new JButton("Eliminar");
+			btnEliminar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (tablaFrappes.getSelectedRow()>0) {
+						controlador.eliminarFrappe(tablaFrappes.getSelectedRow()-1);
+						controlador.actualizarVentanasFrappes();
+					}
+				}
+			});
 			GridBagConstraints gbc_btnEliminar = new GridBagConstraints();
 			gbc_btnEliminar.fill = GridBagConstraints.BOTH;
 			gbc_btnEliminar.insets = new Insets(0, 0, 5, 0);
@@ -135,6 +150,7 @@ public class VentanaFrappes extends JFrame {
 			gbc_btnSalir.gridy = 3;
 			panelTabla.add(btnSalir, gbc_btnSalir);
 		}
+		
 
 		
 		// GETTERS

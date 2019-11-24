@@ -37,6 +37,7 @@ public class Aplicacion {
 		controlador.getVentanaPrincipal().getPanelVenta().getListaFrappes().setModel(controlador.getModeloListaFrappes());
 		// mostramos tabla de  carrito.
 		Venta venta = controlador.getVentanaPrincipal().getPanelVenta().getVenta();
+		
 		controlador.getVentanaPrincipal().getPanelVenta().getTablaCarrito().setModel(venta.getTablaCarrito());
 		// mostrar total inicial
 		double total = controlador.getVentanaPrincipal().getPanelVenta().getVenta().calcularTotal();

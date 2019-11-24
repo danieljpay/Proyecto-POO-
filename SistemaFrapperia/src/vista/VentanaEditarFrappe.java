@@ -19,7 +19,7 @@ public class VentanaEditarFrappe extends VentanaAgregarFrappe {
 	public VentanaEditarFrappe() {
 		super();
 		super.getLblTitulo().setText("Editar Frappé");
-		
+		super.bloqueoNombre();
 		cargarInformacion();
 	}
 	
@@ -29,5 +29,7 @@ public class VentanaEditarFrappe extends VentanaAgregarFrappe {
 	public void cargarInformacion() {
 		
 	}
+	
+	
 
 }

@@ -95,7 +95,7 @@ public class PanelVenta extends JPanel {
 					venta.agregarFrappe(frappe);
 					
 					// actualizamos la tabla del carrito para mostrar al cliente.
-					tablaCarrito.setModel(venta.getTablaCarrito());
+					actualizarCarrito();
 					// actualizamos el total
 					lblTotal.setText("Total: $" + venta.calcularTotal());
 					
@@ -218,6 +218,11 @@ public class PanelVenta extends JPanel {
 		gbc_lblTotal.gridy = 3;
 		add(lblTotal, gbc_lblTotal);
 
+	}
+	
+	//Metodo para actualizar el carrito
+	public void actualizarCarrito () {
+		tablaCarrito.setModel(venta.getTablaCarrito());
 	}
 
 	

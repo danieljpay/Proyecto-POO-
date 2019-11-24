@@ -317,6 +317,7 @@ public class VentanaAgregarFrappe extends JFrame {
 				else {
 					lblMensajes.setText("Debes llenar todos campos.");
 				}
+				
 			}
 		});
 		btnHecho.setBounds(10, 408, 299, 47);
@@ -368,6 +369,12 @@ public class VentanaAgregarFrappe extends JFrame {
 		
 		return false;
 	}
+	
+	//Bloquear edicion del nombre
+	public void bloqueoNombre() {
+		tfNombre.setEditable(false);
+	}
+	
 
 	// GETTERS
 	public Controlador getControlador() {

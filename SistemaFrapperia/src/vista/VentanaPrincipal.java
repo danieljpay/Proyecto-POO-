@@ -65,7 +65,7 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	public VentanaPrincipal() {
 		
-		setTitle("punto de venta frapper\u00EDa");
+		setTitle("Punto de venta DFrappes\u00EDa");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 790, 470);
@@ -200,6 +200,7 @@ public class VentanaPrincipal extends JFrame {
 		btnVerVentas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				controlador.actualizarHistorialVentas();
 				controlador.abrirVentanaHistorialVentas();
 			}
 		});
@@ -211,11 +212,14 @@ public class VentanaPrincipal extends JFrame {
 		panelOpciones.add(btnVerVentas, gbc_btnVerVentas);
 		
 		btnActualizar = new JButton("Actualizar");
+		btnActualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnActualizar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				panelVenta.getListaFrappes().setModel(controlador.getModeloListaFrappes());
-				
+				actualizarTablaFrappesDisponibles();
 			}
 		});
 		GridBagConstraints gbc_btnActualizar = new GridBagConstraints();
@@ -239,6 +243,10 @@ public class VentanaPrincipal extends JFrame {
 		
 		// pedimos la información al controlador.
 		//this.panelVenta.getListaFrappes().setModel(controlador.getListaIngredientes());
+	}
+	
+	public void actualizarTablaFrappesDisponibles() {
+		panelVenta.getListaFrappes().setModel(controlador.getModeloListaFrappes());
 	}
 	
 	

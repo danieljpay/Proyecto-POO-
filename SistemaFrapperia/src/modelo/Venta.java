@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
 //import java.util.ArrayList;
 //import java.util.Date;
 import javax.swing.table.DefaultTableModel;
@@ -44,8 +45,20 @@ public class Venta implements Serializable {
     
     //Agregar y eliminar frappes del carrito.
     public void agregarFrappe(Frappe frappe){
+    	ArrayList<Ingrediente> ingredientesDelFrappe = frappe.getIngredientes();
+    	int bandera=0;
+    	for (int i=0;i<ingredientesDelFrappe.size();i++) {
+    		ingredientesDelFrappe.get(i).setCantidadDisponible(ingredientesDelFrappe.get(i).getCantidadDisponible()-1 );
+    		if (ingredientesDelFrappe.get(i).getCantidadDisponible()<5) {
+    			bandera=1;
+    		}
+    	}
         carrito.agregarFrappe(frappe);
+        if (bandera==1) {
+        	JOptionPane.showMessageDialog(null, "Quedan pocos recursos del algún ingrediente, revisa tu inventario");
+        }
     }
+    
     public void eliminarFrappe(Frappe frappe) {
     	carrito.eliminarFrappe(frappe);
     }    

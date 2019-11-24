@@ -70,8 +70,10 @@ public class Controlador implements Serializable{
 	public DefaultListModel<String> getModeloListaFrappes(){
 		return frappes.getModeloListaFrappes();
 	}
+	
 	// agrega un frappe
 	public void agregarFrappe(String nombre, String precio, JList<String> listaIngredientes) {
+		
 		// generamos el ArrayList de ingredientes
 		ArrayList<Ingrediente> ingredientesFrappe = new ArrayList<Ingrediente>();
 		
@@ -86,11 +88,54 @@ public class Controlador implements Serializable{
 			}
 		}
 		
-		// agregamos el frappe y guardamos los datos.
-		frappes.agregarFrappe(nombre, precio, ingredientesFrappe);
-		System.out.println("Se agregó el frappé.");
-		Cargador.guardarDatos();
+		//Recorre el Array y verifica si el frappe ya existe
+		boolean frappeExistente=false;
+		int indice;
+		for (indice=0;indice<frappes.getListaFrappes().size();indice++) {
+			if (frappes.getListaFrappes().get(indice).getNombre().equals(nombre)) {
+				frappeExistente=true;
+				break;
+			}
+		}
 		
+		//Si el frappe ya existe, lo edita 
+		//Sino, lo crea
+		if (frappeExistente==false) {
+			frappes.agregarFrappe(nombre, precio, ingredientesFrappe);
+			System.out.println("Se agregó el frappé.");
+		}else if (frappeExistente==true) {
+			frappes.editarFrappe(indice, nombre, precio, ingredientesFrappe);
+			for (int i=0;i<ventanaPrincipal.getPanelVenta().getVenta().getCarrito().getListaFrappes().size();i++) { //Todo este for actualiza a los frappes del carrito
+				for (int j=0;j<ventanaPrincipal.getPanelVenta().getVenta().getCarrito().getListaFrappes().get(i).size();j++) {
+					if (ventanaPrincipal.getPanelVenta().getVenta().getCarrito().getListaFrappes().get(i).get(j).getNombre().equals(nombre)) {
+						ventanaPrincipal.getPanelVenta().getVenta().getCarrito().getListaFrappes().get(i).get(j).igualarFrappe(frappes.getFrappePorNombre(nombre));
+					}
+				}
+			}
+			ventanaPrincipal.getPanelVenta().actualizarCarrito();
+			System.out.println("Se editó el frappé.");
+		}
+		Cargador.guardarDatos();
+		actualizarVentanasFrappes();
+	}
+	
+	//Actualiza los frappes de la tabla principal y de la ventana de agregar frappe
+	public void actualizarVentanasFrappes() {
+		ventanaPrincipal.actualizarTablaFrappesDisponibles();
+		ventanaFrappes.getTablaIngredientes().setModel(frappes.getTablaFrappes());
+		Cargador.guardarDatos();
+	}
+	
+	//Eliminar un frappe
+	public void eliminarFrappe(int indice) {
+		frappes.eliminarFrappe(indice);
+		actualizarVentanasFrappes();
+	}
+	
+	//---- METODOS PARA EL CARRITO ----
+	public void limpiarCarrito() {
+		ventanaPrincipal.getPanelVenta().getVenta().getCarrito().getListaFrappes().clear();
+		ventanaPrincipal.getPanelVenta().actualizarCarrito();
 	}
 
 	
@@ -207,10 +252,10 @@ public class Controlador implements Serializable{
 	// Ventas -----------------
 	// termina una venta
 	public void terminarVenta(Venta venta) {
+		System.out.println(venta.getPrecioTotal());;
 		Date fecha = Calendar.getInstance().getTime();
 		venta.setFecha(fecha);
 		ventas.agregarVenta(venta);
-		
 		
 		System.out.println("venta exitosa.");
 		Cargador.guardarDatos();
@@ -431,9 +476,14 @@ public class Controlador implements Serializable{
 		ventanaFrappes.getTablaIngredientes().setModel(frappes.getTablaFrappes());
 		ventanaFrappes.setVisible(true);
 	}
+	
 	public void abrirVentanaHistorialVentas() {
-		ventanaHistorialVentas.getTablaVentas().setModel(ventas.getTablaVentas(ventas.getListaVentas()));
+		actualizarHistorialVentas();
 		ventanaHistorialVentas.setVisible(true);
+	}
+	
+	public void actualizarHistorialVentas() {
+		ventanaHistorialVentas.getTablaVentas().setModel(ventas.getTablaVentas(ventas.getListaVentas()));
 	}
 	
 	public void abrirDialogoPedirCantidad(String nombreIngrediente) {
